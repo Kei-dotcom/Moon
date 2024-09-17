@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Scrollable Image with Popup</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%; 
+            width: 100%;
+            overflow: hidden;
+        }
+        .image-container {
+            height: 100vh;
+            width: 100vw;
+            overflow: auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-container img {
+            display: block;
+            position: relative;
+            max-width: 100%;
+            height: auto;
+            z-index: 1;
+        }
+
+        /* Mobile version */
+        @media (max-width: 767px) {
+            .image-container img.mobile {
+                width: 100vw;
+                height: auto;
+                object-fit: contain;
+            }
+            .image-container img.desktop {
+                display: none;
+            }
+        }
+
+        /* Desktop version */
+        @media (min-width: 768px) {
+            .image-container img.desktop {
+                width: 100vw;
+                height: auto;
+                max-height: none;
+            }
+            .image-container img.mobile {
+                display: none;
+            }
+        }
+
+        /* Cat ears positioning */
+        .cat-ears {
+            position: fixed; /* Change to fixed so it's always visible */
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            width: 150px; /* Adjust the size of the cat ears */
+            height: auto;
+            z-index: 10; /* Ensure the cat ears are above the main image */
+        }
+
+        /* Popup image styling */
+        .popup-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90vw;
+            height: 90vh;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            overflow: auto; /* Allow scrolling for large images */
+        }
+        .popup-container img {
+            width: 100%;
+            height: auto;
+            min-width: 100%; /* Ensure the image fits the container */
+            max-width: none; /* Remove width constraint */
+            max-height: none; /* Remove height constraint */
+        }
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="image-container">
+        <!-- The main image for desktop and mobile -->
+        <img src="desktopimage.png" alt="Desktop Image" class="desktop">
+        <img src="mobileimage.png" alt="Mobile Image" class="mobile">
+    </div>
+
+    <!-- Cat ears that can be clicked (outside the image container to ensure visibility) -->
+    <img src="catears.png" alt="Cat Ears" class="cat-ears" id="catEars">
+
+    <!-- Popup container -->
+    <div class="popup-container" id="popupContainer">
+        <span class="popup-close" id="popupClose">&times;</span>
+        <img src="popupimage1.png" alt="Popup Image">
+    </div>
+
+    <script>
+        // Get elements
+        const catEars = document.getElementById('catEars');
+        const popupContainer = document.getElementById('popupContainer');
+        const popupClose = document.getElementById('popupClose');
+
+        // Add click event listener to the cat ears
+        catEars.addEventListener('click', function() {
+            popupContainer.style.display = 'block';
+        });
+
+        // Add click event listener to the close button
+        popupClose.addEventListener('click', function() {
+            popupContainer.style.display = 'none';
+        });
+    </script>
+
+</body>
+</html>
